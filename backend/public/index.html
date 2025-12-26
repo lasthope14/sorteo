@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔩 Carrera de Tuercas - Hidroobras 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #0d2137 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Tabs Navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: rgba(10, 22, 40, 0.95);
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid rgba(79, 195, 247, 0.3);
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: white;
+        }
+
+        .tab-btn.active {
+            color: #4fc3f7;
+            border-bottom: 3px solid #4fc3f7;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ========== GAME TAB ========== */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #4fc3f7 0%, #0288d1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.3em;
+            font-size: 0.8rem;
+        }
+
+        .game-layout {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #game-container {
+            border: 4px solid rgba(79, 195, 247, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(79, 195, 247, 0.3), 0 20px 60px rgba(0, 0, 0, 0.5);
+            background: #0a1628;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-width: 280px;
+        }
+
+        .prize-selector {
+            background: rgba(10, 22, 40, 0.9);
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .prize-selector label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4fc3f7;
+            margin-bottom: 0.5rem;
+        }
+
+        .prize-selector select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border-radius: 10px;
+            background: rgba(10, 22, 40, 0.9);
+            color: white;
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+        }
+
+        .prize-selector select:focus {
+            outline: none;
+            border-color: #4fc3f7;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-around;
+            background: rgba(10, 22, 40, 0.9);
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #4fc3f7;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .leaderboard {
+            background: rgba(10, 22, 40, 0.9);
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            border-radius: 15px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .leaderboard h3 {
+            color: #4fc3f7;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item.winner {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #4fc3f7 0%, #0288d1 100%);
+            color: #0a1628;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 195, 247, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ========== ADMIN TAB ========== */
+        .admin-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .admin-panel {
+            background: rgba(10, 22, 40, 0.9);
+            border: 2px solid rgba(79, 195, 247, 0.4);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .admin-panel h2 {
+            color: #4fc3f7;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-panel h2 span {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.3rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4fc3f7;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .admin-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .admin-list-item:hover {
+            background: rgba(79, 195, 247, 0.1);
+        }
+
+        .delete-btn {
+            background: rgba(255, 100, 100, 0.2);
+            border: none;
+            color: #ff6b6b;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 100, 100, 0.4);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Winner Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(180deg, #1a3a5c 0%, #0d2137 100%);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            text-align: center;
+            max-width: 500px;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content .winner-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #ffffff 0%, #4fc3f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0;
+        }
+
+        .modal-content .prize-info {
+            font-size: 1.3rem;
+            color: #81d4fa;
+            margin-bottom: 2rem;
+        }
+
+        .modal-content .trophy {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 1rem;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Bubbles Background */
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: radial-gradient(circle, rgba(79, 195, 247, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bubbles Background -->
+    <div class="bubbles">
+        <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-duration: 8s;"></div>
+        <div class="bubble" style="left: 20%; width: 40px; height: 40px; animation-duration: 12s; animation-delay: 1s;">
+        </div>
+        <div class="bubble" style="left: 35%; width: 30px; height: 30px; animation-duration: 9s; animation-delay: 2s;">
+        </div>
+        <div class="bubble"
+            style="left: 50%; width: 40px; height: 40px; animation-duration: 11s; animation-delay: 0.5s;"></div>
+        <div class="bubble" style="left: 65%; width: 25px; height: 25px; animation-duration: 10s; animation-delay: 3s;">
+        </div>
+        <div class="bubble"
+            style="left: 80%; width: 35px; height: 35px; animation-duration: 13s; animation-delay: 1.5s;"></div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="game">🎮 CARRERA</button>
+        <button class="tab-btn" data-tab="admin">⚙️ ADMINISTRACIÓN</button>
+    </nav>
+
+    <!-- GAME TAB -->
+    <section id="game-tab" class="tab-content active">
+        <div class="game-container">
+            <header class="header">
+                <h1>💧 Gran Carrera de Gotas 💧</h1>
+                <p>HIDROOBRAS 2025</p>
+            </header>
+
+            <div class="game-layout">
+                <!-- Game Canvas -->
+                <div id="game-container"></div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="prize-selector">
+                        <label>🎁 Selecciona el Premio:</label>
+                        <select id="prize-select">
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value" id="participant-count">0</div>
+                            <div class="stat-label">Participantes</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="prize-count">0</div>
+                            <div class="stat-label">Premios</div>
+                        </div>
+                    </div>
+
+                    <div class="leaderboard">
+                        <h3>🏆 CLASIFICACIÓN</h3>
+                        <div id="leaderboard-list">
+                            <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 1rem;">
+                                Inicia la carrera para ver resultados
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-primary" id="start-btn" disabled>💧 INICIAR CARRERA</button>
+                        <button class="btn btn-secondary" id="reset-btn" style="display: none;">🔄 NUEVA
+                            CARRERA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN TAB -->
+    <section id="admin-tab" class="tab-content">
+        <div class="admin-container">
+            <div class="admin-grid">
+                <!-- Participantes Panel -->
+                <div class="admin-panel">
+                    <h2><span>👥</span> Participantes</h2>
+
+                    <div class="form-group">
+                        <label>Agregar participantes (uno por línea):</label>
+                        <textarea id="participants-input"
+                            placeholder="Juan Pérez&#10;María García&#10;Carlos López"></textarea>
+                    </div>
+
+                    <div class="admin-actions">
+                        <button class="btn btn-primary btn-sm" id="add-participants-btn">➕ Agregar</button>
+                        <button class="btn btn-secondary btn-sm" id="clear-participants-btn">🗑️ Limpiar Todo</button>
+                    </div>
+
+                    <div class="admin-list" id="participants-list">
+                        <!-- Lista de participantes -->
+                    </div>
+                </div>
+
+                <!-- Premios Panel -->
+                <div class="admin-panel">
+                    <h2><span>🎁</span> Premios</h2>
+
+                    <div class="form-group">
+                        <label>Nombre del premio:</label>
+                        <input type="text" id="prize-name-input" placeholder="Televisor 55&quot;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción (opcional):</label>
+                        <input type="text" id="prize-desc-input" placeholder="Smart TV 4K Samsung">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Imagen del premio (opcional):</label>
+                        <input type="file" id="prize-image-input" accept="image/*"
+                            style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 8px; cursor: pointer;">
+                        <img id="prize-image-preview"
+                            style="display: none; max-width: 150px; max-height: 100px; margin-top: 0.5rem; border-radius: 8px; border: 2px solid rgba(79,195,247,0.4);">
+                    </div>
+
+                    <div class="admin-actions">
+                        <button class="btn btn-primary btn-sm" id="add-prize-btn">➕ Agregar Premio</button>
+                        <button class="btn btn-secondary btn-sm" id="clear-prizes-btn">🗑️ Limpiar Todo</button>
+                    </div>
+
+                    <div class="admin-list" id="prizes-list">
+                        <!-- Lista de premios -->
+                    </div>
+                </div>
+
+                <!-- Historial Panel -->
+                <div class="admin-panel">
+                    <h2><span>📋</span> Historial de Ganadores</h2>
+
+                    <div class="admin-list" id="winners-list">
+                        <!-- Lista de ganadores -->
+                    </div>
+
+                    <div class="admin-actions">
+                        <button class="btn btn-secondary btn-sm" id="reset-raffle-btn">🔄 Reiniciar Sorteo</button>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Winner Modal - Compacto y Centrado -->
+    <div class="modal-overlay" id="winner-modal">
+        <div class="modal-content"
+            style="max-width: 450px; padding: 2rem; background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 40%, #0d2137 100%); border: 3px solid; border-image: linear-gradient(135deg, #ffd700, #ff8c00, #ffd700) 1; position: relative; overflow: hidden; text-align: center;">
+
+            <!-- Confetti Background -->
+            <div
+                style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 10%; left: 5%; font-size: 1.2rem; animation: confetti 3s ease-in-out infinite;">
+                    ✨</div>
+                <div
+                    style="position: absolute; top: 20%; right: 10%; font-size: 1rem; animation: confetti 2.5s ease-in-out infinite 0.5s;">
+                    🎊</div>
+                <div
+                    style="position: absolute; bottom: 30%; right: 5%; font-size: 1rem; animation: confetti 2.8s ease-in-out infinite 0.3s;">
+                    🎉</div>
+                <div
+                    style="position: absolute; bottom: 20%; left: 8%; font-size: 0.9rem; animation: confetti 2.2s ease-in-out infinite 0.7s;">
+                    💫</div>
+            </div>
+
+            <!-- Header -->
+            <div style="position: relative; z-index: 1;">
+                <div
+                    style="font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem;">
+                    HIDROOBRAS 2025</div>
+                <h2
+                    style="font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">
+                    🎉 ¡FELICIDADES! 🎉</h2>
+            </div>
+
+            <!-- Winner Trophy + Name -->
+            <div style="position: relative; z-index: 1; margin: 0.5rem 0;">
+                <div
+                    style="font-size: 3.5rem; animation: trophy-glow 1.5s ease-in-out infinite alternate; filter: drop-shadow(0 0 20px rgba(255,215,0,0.8));">
+                    🏆</div>
+                <div id="first-name"
+                    style="font-size: 1.5rem; font-weight: 900; background: linear-gradient(180deg, #fff 0%, #ffd700 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 0.5rem 0;">
+                    -</div>
+            </div>
+
+            <!-- Prize Image (Centrada) -->
+            <div id="winner-prize-image-container"
+                style="margin: 1rem auto; position: relative; z-index: 1; display: flex; justify-content: center;">
+                <img id="winner-prize-image"
+                    style="display: none; max-width: 200px; max-height: 150px; border-radius: 15px; border: 3px solid rgba(255,215,0,0.6); box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.2);">
+            </div>
+
+            <!-- Prize Name -->
+            <div class="prize-info" id="winner-prize"
+                style="font-size: 1.3rem; color: #81d4fa; margin: 0.8rem 0; padding: 0.7rem 1.5rem; background: rgba(79,195,247,0.15); border-radius: 50px; display: inline-block; border: 2px solid rgba(79,195,247,0.4); position: relative; z-index: 1; font-weight: 700;">
+                🎁 Premio</div>
+
+            <!-- Accept Button -->
+            <div style="position: relative; z-index: 1; margin-top: 1rem;">
+                <button class="btn btn-primary" id="close-modal-btn"
+                    style="font-size: 1.1rem; padding: 0.8rem 3rem; background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); color: #1a1a1a; font-weight: 900; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(255,215,0,0.4); border-radius: 50px;">✓
+                    CONTINUAR</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes confetti {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(180deg);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes trophy-glow {
+            from {
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                transform: translateY(-8px) scale(1.05);
+            }
+        }
+    </style>
+
+    <!-- p5.js and Matter.js -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <!-- Game Scripts -->
+    <script src="plinko/particle.js"></script>
+    <script src="plinko/plinko.js"></script>
+    <script src="plinko/boundary.js"></script>
+    <script src="plinko/sketch.js"></script>
+
+    <!-- Admin Script -->
+    <script src="admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Database
+*.db
+
+# Uploads (user content)
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Frontend build (not needed, we use backend only)
+frontend/
