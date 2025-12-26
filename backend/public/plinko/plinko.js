@@ -1,5 +1,5 @@
 // Hidroobras - Obstáculos tipo Tubería
-// Los obstáculos donde rebotan las gotas son tuberías industriales
+// Los obstáculos donde rebotan las tuercas son tuberías industriales
 
 function Plinko(x, y, r) {
   var options = {

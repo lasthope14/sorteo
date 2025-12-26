@@ -1,4 +1,4 @@
-// Hidroobras - Gran Carrera de Gotas
+// Hidroobras - Gran Carrera de Tuercas
 // Basado en Plinko de Daniel Shiffman (Coding Train)
 // Adaptado para sorteo con nombres de participantes
 
@@ -168,7 +168,7 @@ async function startRace() {
   document.getElementById('start-btn').disabled = true;
   document.getElementById('start-btn').textContent = '🏁 CARRERA EN CURSO...';
 
-  // Soltar todas las gotas AL MISMO TIEMPO
+  // Soltar todas las tuercas AL MISMO TIEMPO
   var shuffled = [...participantes].sort(() => Math.random() - 0.5);
 
   // Calcular posiciones X distribuidas equitativamente
@@ -179,7 +179,7 @@ async function startRace() {
   for (var i = 0; i < shuffled.length; i++) {
     // Posición X distribuida + pequeña variación aleatoria
     var x = startX + (i * spacing) + (Math.random() * 20 - 10);
-    var p = new Particle(x, 20, 20, shuffled[i].nombre, false);  // Gotas grandes
+    var p = new Particle(x, 20, 20, shuffled[i].nombre, false);  // Tuercas grandes
     particles.push(p);
   }
 

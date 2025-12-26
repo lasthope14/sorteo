@@ -15,7 +15,7 @@ function Particle(x, y, r, nombre, isWinner) {
     restitution: 0.5,     // Rebote moderado
     friction: 0.001,      // Muy poca fricción
     frictionAir: 0.0005,  // Casi sin resistencia del aire - caen rápido
-    density: 0.8,         // Gotas pesadas que caen bien
+    density: 0.8,         // Tuercas pesadas que caen bien
     label: 'particle'
   };
 
